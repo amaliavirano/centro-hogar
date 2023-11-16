@@ -1,0 +1,23 @@
+.Navbar {
+    background-color: #DD0426
+}
+
+.precio {
+    color: #DD0426;
+    font: bolder;
+
+
+}
+
+.cardprod{
+justify-content: center;
+
+}
+.cuerpoImg {
+
+    padding: 5%;
+    width: 60%;
+    text-align: justify;
+
+}
+

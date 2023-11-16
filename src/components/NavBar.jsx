@@ -1,24 +1,30 @@
-import React from 'react';
-import CartWidget from './CartWidget';
-import { Flex, Box, Text, Menu, MenuButton, MenuItem, MenuList, Image } from '@chakra-ui/react';
+import React from 'react'
+import CartWidget from './CartWidget'
+import { Flex, Box, Text, Menu, MenuButton, MenuItem, MenuList, Image } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
+import logo from '../assets/logo.png'
+
 
 const NavBar = () => {
   return (
     <Flex
+      className='Navbar'
       align="center"
       justify="space-between"
       padding="1rem"
-      backgroundColor="red"
       color="white"
       fontWeight={'bold'}
       fontSize={20}
+
     >
       <Box p='4'>
-        <Image
-          src="logo.png"
-          alt="LOGO"
-          boxSize="130px"
-        />
+        <Link to={"/"}>
+          <Image
+            src={logo}
+            alt="LOGO"
+            boxSize="130px"
+          />
+        </Link>
       </Box>
 
 
@@ -27,23 +33,23 @@ const NavBar = () => {
       <Box p='4'>
         <Menu>
           <MenuButton>
-            <Text as='b'>CATEGORIAS</Text>
+            <Text as='b' fontSize={25}>CATEGORIAS</Text>
           </MenuButton>
           <MenuList color="grey" fontSize={15}>
-            <MenuItem>TV-AUDIO-VIDEO</MenuItem>
-            <MenuItem>CLIMATIZACION</MenuItem>
-            <MenuItem>TECNOLOGIA Y CELULARES</MenuItem>
-            <MenuItem>ELECTRO HOGAR</MenuItem>
-            <MenuItem>HOGAR Y JARDIN</MenuItem>
-            <MenuItem>SALUD Y BELLEZA</MenuItem>
-            <MenuItem>DECO HOGAR</MenuItem>
-            <MenuItem>MAS PRODUCTOS</MenuItem>
+            <MenuItem><Link to={`categoria/TV-AUDIO-VIDEO`}>TV-AUDIO-VIDEO</Link></MenuItem>
+            <MenuItem><Link to={`categoria/TECNOLOGIA Y CELULARES`}>TECNOLOGIA Y CELULARES</Link></MenuItem>
+            <MenuItem><Link to={`categoria/ELECTRO HOGAR`}>ELECTRO HOGAR</Link></MenuItem>
+            <MenuItem><Link to={`categoria/HOGAR Y JARDIN`}>HOGAR Y JARDIN</Link></MenuItem>
+            
+
           </MenuList>
         </Menu>
       </Box>
       <Box flex="1" />
       <Box p='4'>
-        <CartWidget />
+        <Link to={"/Cart"}>
+          <CartWidget />
+        </Link>
       </Box>
     </Flex>
   );
