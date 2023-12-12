@@ -1,62 +1,88 @@
-import React from 'react'
-import { useState } from 'react'
-import { Button, Badge, useToast } from '@chakra-ui/react'
+import React, { useState, useContext } from 'react';
+import { Button, Badge, useToast } from '@chakra-ui/react';
+import { CartContext } from '../context/ShoppingCartContext';
+import { Link } from 'react-router-dom';
 
+const ItemCount = ({ productos }) => {
+  const { addItem } = useContext(CartContext);
+  const [count, setCount] = useState(0);
+  const [addedToCart, setAddedToCart] = useState(false);
+  const toast = useToast();
 
-const ItemCount = ({productos}) => {
-
-    const [count, setCount] = useState(0);
-    const toast = useToast();
-
-    const actualizarCount = ()=> {
-
-        if(count<productos.stock){
-          
-            setCount(count+1);
-        }
-    };
-       
-    const decrement = () => {
-        if (count < 1) {
-            setCount(0);
-        } else {
-            setCount(count - 1);
-        }
+  const actualizarCount = () => {
+    if (count < productos.stock) {
+      setCount(count + 1);
+    } else {
+      toast({
+        title: 'Error',
+        description: 'No hay más unidades disponibles.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
-       
+  };
 
-    const addToCart = () => {
-        toast ({
-            title: 'Felicitaciones',
-            description: `Has agregado ${count} unidades a tu carrito`,
-            status: 'success',
-            duration: 5000,
-            isClosable: true,
-            containerStyle: {
-                width: '700px',
-                maxWidth: '100%',
-
-            },
-        })
-
+  const decrement = () => {
+    if (count > 0) {
+      setCount(count - 1);
     }
+  };
 
-    return (
-        <div>
-            <Button colorScheme='black' variant='outline' onClick={decrement}>
-                -
-            </Button>
-            <Badge colorScheme='black'>{count}</Badge>
+  const addToCart = () => {
+    const quantityToAdd = Math.min(count, productos.stock);
 
-            <Button colorScheme='black' variant='outline' onClick={actualizarCount}>
-                +
-            </Button>
+    if (quantityToAdd > 0) {
+      addItem(productos, quantityToAdd);
 
-            <Button colorScheme='red' onClick={addToCart}>Agregar al carrito</Button>
+      toast({
+        title: 'Felicitaciones',
+        description: `Has agregado ${quantityToAdd} unidades a tu carrito`,
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
 
-        </div>
-    )
-}
+     
+      setAddedToCart(true);
+    } else {
+      toast({
+        title: 'Advertencia',
+        description: 'Debes agregar al menos una unidad al carrito.',
+        status: 'warning',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
 
-export default ItemCount
+  return (
+    <div>
+      
+      {!addedToCart && (
+        <>
+          <Button colorScheme='black' variant='outline' onClick={decrement}>
+            -
+          </Button>
+          <Badge colorScheme='black'>{count}</Badge>
+          <Button colorScheme='black' variant='outline' onClick={actualizarCount}>
+            +
+          </Button>
+          <Button colorScheme='red' onClick={addToCart}>
+            Agregar al carrito
+          </Button>
+        </>
+      )}
+
+     
+      {addedToCart && (
+        <Button colorScheme='red' variant='outline'  onClick={() => console.log('Ir al carrito')}>
+          <Link to={`/cart`}>Ir al carrito </Link>
+        </Button>
+      )}
+    </div>
+  );
+};
+
+export default ItemCount;
 

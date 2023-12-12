@@ -6,10 +6,9 @@ import { Image, Stack, Heading, Text, Button } from '@chakra-ui/react'
 import { Flex } from '@chakra-ui/react'
 
 
-
-
 const ItemDetail = ({ productos }) => {
   const { id } = useParams();
+ 
 
   const filterProductos = productos.filter((producto) => producto.id == id)
 

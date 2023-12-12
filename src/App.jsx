@@ -10,29 +10,35 @@ import Cart from './components/Cart'
 import ItemCount from './components/ItemCount'
 import Item from './components/Item'
 import ItemDetail from './components/ItemDetail'
-
-
-
+import ShoppingCartContext from './context/ShoppingCartContext'
+import CartWidget from './components/CartWidget'
 
 const App = () => {
   return (
     <div>
-      <BrowserRouter>
-        <NavBar />
+      <ShoppingCartContext>
 
-        <Routes>
+        <BrowserRouter>
+          <NavBar />
 
-          <Route exact path='/' element={<Home />} />
-          <Route exact path='/About' element={<About />} />
-          <Route exact path='/Cart' element={<Cart />} />
-          <Route exact path='/categoria/:categoria' element={<ItemListContainer />} />
-          <Route exact path='/item/:id' element={<ItemDetailContainer />} />
-         
-        </Routes>
+          <Routes>
+
+            <Route exact path='/' element={<Home />} />
+            <Route exact path='/About' element={<About />} />
+            <Route exact path='/Cart' element={<Cart />} />
+            <Route exact path='/categoria/:categoria' element={<ItemListContainer />} />
+            <Route exact path='/item/:id' element={<ItemDetailContainer />} />
+            <Route exact path='/CartWidget' element={<CartWidget/>}/>
+
+          </Routes>
 
 
 
-      </BrowserRouter>
+        </BrowserRouter>
+      </ShoppingCartContext>
+
+
+
 
 
     </div>
