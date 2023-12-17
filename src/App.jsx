@@ -7,11 +7,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import About from './components/About'
 import Home from './components/Home'
 import Cart from './components/Cart'
-import ItemCount from './components/ItemCount'
-import Item from './components/Item'
-import ItemDetail from './components/ItemDetail'
 import ShoppingCartContext from './context/ShoppingCartContext'
 import CartWidget from './components/CartWidget'
+import SendOrder from './components/SendOrder'
 
 const App = () => {
   return (

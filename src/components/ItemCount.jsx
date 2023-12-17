@@ -3,14 +3,18 @@ import { Button, Badge, useToast } from '@chakra-ui/react';
 import { CartContext } from '../context/ShoppingCartContext';
 import { Link } from 'react-router-dom';
 
-const ItemCount = ({ productos }) => {
+
+
+
+const ItemCount = ({ producto,id }) => {
   const { addItem } = useContext(CartContext);
   const [count, setCount] = useState(0);
   const [addedToCart, setAddedToCart] = useState(false);
   const toast = useToast();
+  
 
   const actualizarCount = () => {
-    if (count < productos.stock) {
+    if (count < producto.stock) {
       setCount(count + 1);
     } else {
       toast({
@@ -28,12 +32,13 @@ const ItemCount = ({ productos }) => {
       setCount(count - 1);
     }
   };
-
+  
   const addToCart = () => {
-    const quantityToAdd = Math.min(count, productos.stock);
+    const quantityToAdd = Math.min(count, producto.stock);
 
     if (quantityToAdd > 0) {
-      addItem(productos, quantityToAdd);
+      addItem(producto, quantityToAdd,id);
+      console.log('ID que se pasa al carrito:',id);
 
       toast({
         title: 'Felicitaciones',
@@ -77,7 +82,7 @@ const ItemCount = ({ productos }) => {
      
       {addedToCart && (
         <Button colorScheme='red' variant='outline'  onClick={() => console.log('Ir al carrito')}>
-          <Link to={`/cart`}>Ir al carrito </Link>
+          <Link to={`/cart`}>Ir al carrito  </Link>
         </Button>
       )}
     </div>

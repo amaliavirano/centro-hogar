@@ -1,33 +1,27 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { CartContext } from '../context/ShoppingCartContext';
 import { Card, CardBody, Image, CardFooter, Center, Heading, Text, Divider, Button, ButtonGroup } from '@chakra-ui/react';
+import SendOrder from './SendOrder';
 
 
-const Cart = () => {
+const Cart = ({producto,id}) => {
   const { cart, removeItem, clearCart } = useContext(CartContext);
-
-  const handleRemoveItem = (productId) => {
-
-    const itemToRemove = cart.find((item) => item.product.id === productId);
-
-    if (itemToRemove.quantity > 1) {
-      removeItem(productId, 1);
-    } else {
-      removeItem(productId);
-    }
-  };
+  console.log("Cart State:", cart);
 
   return (
+    <div>
     <Center>
       <Card maxW='2xl' className="cart-container">
-        <CardBody>
+        <CardBody key={id}>
           {cart.length === 0 ? (
             <Text fontSize='xl'>No hay productos en el carrito.</Text>
           ) : (
+
+          
             cart.map((item) => (
-              <div key={item.product.id} className="cart-item">
+              <div key={id} className="cart-item">
                 <div>
+                  {/* Contenido del producto */}
                   <Image
                     src={item.product.imagen}
                     alt={item.product.titulo}
@@ -39,14 +33,12 @@ const Cart = () => {
                   <Heading size='md'>{item.product.titulo}</Heading>
                   <Text>Cantidad: {item.quantity}</Text>
                   <Text>Precio: {item.product.precio}</Text>
-
-
                 </div>
                 <Button
                   className="remove-button"
                   variant='link'
                   colorScheme='red'
-                  onClick={() => handleRemoveItem(item.product.id)}
+                  onClick={() => removeItem(item.product)}
                 >
                   X
                 </Button>
@@ -71,8 +63,15 @@ const Cart = () => {
           </>
         )}
       </Card>
+
+      
     </Center>
+    
+    <SendOrder/>
+    </div>
   );
+
+ 
 };
 
 export default Cart;
